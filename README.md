@@ -34,7 +34,7 @@ HospitalManagementSystem/
 
 ### 2️⃣ Clone the Repository
 ```sh
-git clone https://github.com/your-repository/hospital-management-system.git
+git clone https://github.com/atinbera/Hospital-Management-System.git
 cd hospital-management-system
 ```
 
@@ -46,22 +46,22 @@ USE hospital;
 
 CREATE TABLE patients (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    age INT,
-    gender VARCHAR(10)
+    name VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    gender VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE doctors (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    specialization VARCHAR(100)
+    name VARCHAR(100) NOT NULL,
+    specialization VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE appointments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     patient_id INT,
     doctor_id INT,
-    date DATE,
+    date DATE NOT NULL,
     FOREIGN KEY (patient_id) REFERENCES patients(id),
     FOREIGN KEY (doctor_id) REFERENCES doctors(id)
 );
@@ -72,7 +72,7 @@ Update database credentials in `HospitalManagementSystem.java`:
 ```java
 private static final String url = "jdbc:mysql://localhost:3306/hospital";
 private static final String username = "root";
-private static final String password = "yourpassword";
+private static final String password = "TypeYourMySQLPasssword";
 ```
 
 ### 5️⃣ Run the Application
@@ -83,19 +83,18 @@ java HospitalManagementSystem
 ```
 
 ## 📷 Screenshots
-*(Add screenshots of the system in action if available)*
+![alt text](image-1.png)
+![alt text](image.png)
 
 ## 💡 Future Improvements
 - Implement GUI using **Java Swing/JavaFX**
 - Add **authentication system** for secure access
 - Implement **prescription & billing system**
 
-## 🤝 Contributing
-Feel free to contribute by submitting a pull request or reporting issues!
 
 ## 📜 License
 This project is licensed under the **MIT License**.
 
 ---
-**Made with ❤️ by [Your Name]**
+**Made with ❤️ by Atin Bera**
 
