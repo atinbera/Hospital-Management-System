@@ -20,19 +20,28 @@ public class Patient {
         sc.nextLine();  // Consume any leftover newline
         String name = sc.nextLine(); // Read full name
 
-        System.out.print("Enter Patient Age: ");
+        System.out.print("Enter Patient's Age: ");
         int age = sc.nextInt();
 
-        System.out.print("Enter Patient Gender: ");
+        System.out.print("Enter Patient's Gender: ");
         sc.nextLine(); // Consume newline left by nextInt()
         String gender = sc.nextLine();
 
-        String query = "INSERT INTO patients(name, age, gender) VALUES(?, ?, ?)";
+        System.out.println("Enter Patient's Phone Number: ");
+        long pnumber=sc.nextLong();
+        sc.nextLine();
+
+        System.out.println("Enter Email of Patient: ");
+        String email=sc.nextLine();
+
+        String query = "INSERT INTO patients(name, age, gender, pnumber, email) VALUES(?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, age);
             preparedStatement.setString(3, gender);
+            preparedStatement.setLong(4,pnumber);
+            preparedStatement.setString(5, email);
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows > 0) {
@@ -52,20 +61,22 @@ public class Patient {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            System.out.println("+--------------+----------------------------+----------+---------------+");
-            System.out.println("| Patient ID   |         Patient Name       |    Age   |    Gender     |");
-            System.out.println("+--------------+----------------------------+----------+---------------+");
+            System.out.println("+--------------+----------------------------+--------+------------+---------------------+--------------------------------------+");
+            System.out.println("| Patient ID   |         Patient Name       |   Age  |   Gender   |   Phone Number      |               Email                  ");
+            System.out.println("+--------------+----------------------------+--------+------------+---------------------+--------------------------------------+");
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int age = resultSet.getInt("age");
                 String gender = resultSet.getString("gender");
+                Long pnumber=resultSet.getLong("pnumber");
+                String email = resultSet.getString("email");
 
-                System.out.printf("| %-12s | %-26s | %-8s | %-13s |\n", id, name, age, gender);
+                System.out.printf("| %-12s | %-26s | %-6s | %-10s | %-19s | %-40s|\n", id, name, age, gender,pnumber,email);
             }
 
-            System.out.println("+--------------+----------------------------+----------+---------------+");
+            System.out.println("+--------------+----------------------------+--------+------------+---------------------+--------------------------------------+");
 
         } catch (SQLException e) {
             System.out.println("❌ Error fetching patient data.");
